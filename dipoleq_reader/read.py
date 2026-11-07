@@ -1,3 +1,21 @@
+"""Read DipoleQ HDF5 equilibria and baseline exports.
+
+Example for a native DipoleQ HDF5 file::
+
+    import matplotlib.pyplot as plt
+    from dipoleq_reader.read import DPEqFile
+
+    eq = DPEqFile("equilibrium.h5")
+    plt.contour(eq.get_r(), eq.get_z(), eq.get_psirz())
+    plt.xlabel("R [m]")
+    plt.ylabel("Z [m]")
+    plt.show()
+
+Native DipoleQ grids are stored in (Z, R) order. Baseline exports store
+their grids in (R, Z) order; use ``eq.get_psirz(transpose=True)`` when
+plotting a baseline export with R on the horizontal axis.
+"""
+
 import h5py
 import numpy as np
 import contourpy
@@ -465,9 +483,3 @@ def print_dict_structure(d, indent=0):
 
 def read_eqfile(fn):
     return DPEqFile(fn)
-
-# # Example usage:
-# fn = "/Users/Jerome.Guterl/development/dipole_hermes_mesh/test.h5"
-
-# dpeq = DPEqReader(fn)
-# print_dict_structure(dpeq.data)
